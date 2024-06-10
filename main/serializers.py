@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from main.models import Product, Contact, NetworkLink
+from main.validators import NetworkLinkValidator
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -27,6 +28,7 @@ class ContactListDetailSerializer(serializers.ModelSerializer):
 
 
 class NetworkLinkSerializer(serializers.ModelSerializer):
+    validators = [NetworkLinkValidator(),]
 
     class Meta:
         model = NetworkLink
@@ -34,6 +36,7 @@ class NetworkLinkSerializer(serializers.ModelSerializer):
 
 
 class NetworkLinkUpdateSerializer(serializers.ModelSerializer):
+    validators = [NetworkLinkValidator(),]
 
     class Meta:
         model = NetworkLink

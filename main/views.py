@@ -1,3 +1,5 @@
+import django_filters
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
 
@@ -38,10 +40,20 @@ class NetworkLinkViewAPIView(RetrieveAPIView):
     permission_classes = [IsActive]
 
 
+class NetworkLinkFilter(django_filters.FilterSet):
+    country = django_filters.CharFilter(field_name='contact__country', lookup_expr='exact')
+
+    class Meta:
+        model = NetworkLink
+        fields = ['country']
+
+
 class NetworkLinkListAPIView(ListAPIView):
     serializer_class = NetworkLinkListViewSerializer
     queryset = NetworkLink.objects.all()
     permission_classes = [IsActive]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = NetworkLinkFilter
 
 
 class NetworkLinkUpdateAPIView(UpdateAPIView):
